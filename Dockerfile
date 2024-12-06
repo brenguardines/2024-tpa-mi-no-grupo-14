@@ -1,21 +1,16 @@
-# Usar una imagen base con Java
+# syntax = docker/dockerfile:1.2
+#
+# Build stage
+#
+FROM maven:3.8.6-openjdk-18 AS build
+COPY . .
+RUN mvn clean package assembly:single -DskipTests
+
+#
+# Package stage
+#
 FROM openjdk:17-jdk-slim
-
-# Establecer el directorio de trabajo dentro del contenedor
-WORKDIR /app
-
-# Copiar el archivo pom.xml para instalar las dependencias
-COPY pom.xml /app/
-
-# Ejecutar mvn para descargar dependencias
-RUN mvn clean install
-
-# Copiar el archivo .jar generado a la imagen
-COPY target/ejercicio-1.0-SNAPSHOT.jar /app/ejercicio.jar
-
-# Exponer el puerto que usará la aplicación
+COPY --from=build target/ejercicio-1.0-SNAPSHOT-jar-with-dependencies.jar ejercicio-1.0-SNAPSHOT.jar
+# ENV PORT=8080
 EXPOSE 8000
-
-# Comando para ejecutar la aplicación
-CMD ["java", "-jar", "/app/ejercicio.jar"]
-
+CMD ["java", "-jar", "ejercicio-1.0-SNAPSHOT.jar"]
