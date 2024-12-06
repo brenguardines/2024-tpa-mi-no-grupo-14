@@ -18,8 +18,7 @@ FROM openjdk:17-jdk-slim
 
 # Copiar el archivo .jar generado a la imagen
 #COPY target/ejercicio-1.0-SNAPSHOT.jar /app/ejercicio.jar
-COPY --from=build target/ejercicio-1.0-SNAPSHOT-jar-with-dependencies.jar original-ejercicio-1.0-SNAPSHOT.jar
-
+COPY --from=build target/ejercicio-1.0-SNAPSHOT-jar-with-dependencies.jar ejercicio-1.0-SNAPSHOT.jar
 # ENV PORT=8080
 EXPOSE 8000
 CMD ["java", "-jar", "ejercicio-1.0-SNAPSHOT.jar"]
