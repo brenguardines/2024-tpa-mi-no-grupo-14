@@ -1,24 +1,12 @@
-# syntax = docker/dockerfile:1.2
-#
-# Build stage
-#
-FROM maven:3.8.6-openjdk-18 AS build
+# Etapa de construcción
+FROM openjdk:17-slim AS build
+WORKDIR /app
 COPY . .
-RUN mvn clean package assembly:single -DskipTests
+RUN apt-get update && apt-get install -y maven
+RUN mvn clean package -DskipTests
 
-
+# Etapa de ejecución
 FROM openjdk:17-jdk-slim
-
-# Establecer el directorio de trabajo dentro del contenedor
-#WORKDIR /app
-
-# Copiar el archivo pom.xml para instalar las dependencias
-#COPY pom.xml /app/
-
-
-# Copiar el archivo .jar generado a la imagen
-#COPY target/ejercicio-1.0-SNAPSHOT.jar /app/ejercicio.jar
-COPY --from=build target/ejercicio-1.0-SNAPSHOT-jar-with-dependencies.jar ejercicio-1.0-SNAPSHOT.jar
-# ENV PORT=8080
-EXPOSE 8000
-CMD ["java", "-jar", "ejercicio-1.0-SNAPSHOT.jar"]
+COPY --from=build /app/target/ejercicio-1.0-SNAPSHOT.jar /ejercicio-1.0-SNAPSHOT.jar
+EXPOSE 8080
+CMD ["java", "-jar", "/ejercicio-1.0-SNAPSHOT.jar"]
