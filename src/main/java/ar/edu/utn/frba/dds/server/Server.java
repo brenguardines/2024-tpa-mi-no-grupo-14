@@ -36,7 +36,7 @@ public class Server {
             if (Boolean.parseBoolean(PrettyProperties.getInstance().propertyFromName("dev_mode"))) {
                 //acá se inicializan datos de prueba
                    Initializer.init("../2024-tpa-mi-no-grupo-14/DB.sql", "jdbc:mysql://localhost:3306/tpanualdds?serverTimezone=America/Argentina/Buenos_Aires",
-                      "root", "1234");
+                      "root", "123456");
             }
         }
     }

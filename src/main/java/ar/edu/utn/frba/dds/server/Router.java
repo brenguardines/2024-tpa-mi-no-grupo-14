@@ -147,7 +147,7 @@ public class Router {
         app.get("/gestionHeladeras", ctx -> ctx.render("/accionesAdministrador/gestionarHeladeras.hbs"));
 
         // Mapa de heladeras
-        app.get("/mapaDeHeladeras",ctx -> ctx.render("mapas/mapaHeladeras.hbs"));
+        //app.get("/mapaDeHeladeras",ctx -> ctx.render("mapas/mapaHeladeras.hbs"));
 
         // MENSAJES --------------------------------------------------------------------------------------------------------
         app.get("/canjeoExitoso", ctx -> ctx.render("/mensajes/exitos/canjeoExitoso.hbs"));
